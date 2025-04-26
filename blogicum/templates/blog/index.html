@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Лента записей
+{% endblock %}
+
+{% block content %}
+    <h1 class="mb-3">Лента записей</h1>
+
+    <div class="row">
+        {% for post in posts %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-geo-alt"></i> <strong>Место:</strong> {{ post.location }}</li>
+                            <li class="mb-2"><i class="bi bi-calendar"></i> <strong>Дата:</strong> {{ post.date }}</li>
+                            <li class="mb-3">
+                                <i class="bi bi-tag"></i> <strong>Категория:</strong> <a href="{% url 'blog:category_posts' post.category %}" class="badge bg-success">{{ post.category }}</a>
+                            </li>
+                        </ul>
+                        <p class="card-text">{{ post.text|truncatewords:10 }}</p>
+                        <a href="{% url 'blog:post_detail' post.id %}" class="btn btn-primary">Читать полный текст</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

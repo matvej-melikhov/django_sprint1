@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Пост
+{% endblock %}
+
+{% block content %}
+<div class="card-body">
+    <ul class="list-unstyled">
+        <li class="mb-2 fs-5"><i class="bi bi-geo-alt"></i> <strong>Место:</strong> {{ post.location }}</li>
+        <li class="mb-2 fs-5"><i class="bi bi-calendar"></i> <strong>Дата:</strong> {{ post.date }}</li>
+        <li class="mb-3 fs-5">
+            <i class="bi bi-tag"></i> <strong>Категория:</strong> <a href="{% url 'blog:category_posts' post.category %}" class="badge bg-success">{{ post.category }}</a>
+        </li>
+    </ul>
+    <p class="card-text">{{ post.text }}</p>
+</div>
+{% endblock %}
