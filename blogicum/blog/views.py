@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404
 
 
 posts = [
@@ -31,7 +32,7 @@ posts = [
                 гиблого места.''',
     },
     {
-        'id': 2,
+        'id': 10,
         'location': 'Остров отчаянья',
         'date': '25 октября 1659 года',
         'category': 'not-my-day',
@@ -45,15 +46,25 @@ posts = [
 ]
 
 
+def extract_post_by_id(id):
+    for post in posts:
+        if post['id'] == id:
+            return post
+    return None
+
+
 def index(request):
     template_name = 'blog/index.html'
     context = {'posts': posts[::-1]}
     return render(request, template_name, context)
 
 
-def post_detail(request, id):
+def post_detail(request, post_id):
     template_name = 'blog/detail.html'
-    context = {'post': posts[id]}
+    post = extract_post_by_id(post_id)
+    if post is None:
+        raise Http404('Пост не найден')
+    context = {'post': post}
     return render(request, template_name, context)
 
 
